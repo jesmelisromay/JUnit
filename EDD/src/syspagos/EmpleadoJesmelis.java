@@ -3,6 +3,7 @@ package syspagos;
 import excepciones.CargoException;
 
 
+
 import excepciones.MesesTrabajoException;
 import excepciones.NombreEmpleadoException;
 import excepciones.NumeroEmpleadoException;
@@ -10,7 +11,7 @@ import excepciones.NumeroEmpleadoException;
 //import javax.*;
 import java.util.regex.Pattern;
 
-public class Empleado {
+public class EmpleadoJesmelis {
 
     private int numeroEmpleado;
     String nombreEmpleado;
@@ -22,12 +23,13 @@ public class Empleado {
     public Prima calcularPrima (String numEmpleado, String nomEmpleado, String mesesT, String dir)
             throws NumeroEmpleadoException, NombreEmpleadoException, MesesTrabajoException, CargoException {
 
+    
         establecerNumeroEmpleado(numEmpleado);
         estableceNombreEmpleado(nomEmpleado);
         estableceMesesTrabajo(mesesT);
         establecerSerDirectivo(dir);
 
-        if (getDirectivo() && getMesesTrabajo() >=12){
+        if (getDirectivo() && getMesesTrabajo() >= 12){
             setPrima(Prima.P1);
             return Prima.P1;
         }
@@ -51,48 +53,54 @@ public class Empleado {
         int n;
         if (nEmpleado.matches("^\\d+$")){
             n= Integer.parseInt(nEmpleado);
-            if (n>000 && n < 1000 ){
+            if (n>=100 && n < 1000 ){
                 setNumeroEmpleado(n);
                 return;
             }
         }
-        throw new NumeroEmpleadoException("");
+        throw new NumeroEmpleadoException("Numero de empleado incorrecto");
 //        String numeroCeros = String.valueOf(obj.format("%05d", numero));
     }
 
     public void estableceNombreEmpleado(String nombreEmpleado) throws NombreEmpleadoException {
 
-        if (Pattern.matches("^[a-zA-Z0-9]*$", nombreEmpleado)){
-            if (nombreEmpleado.length()>=10){
+        if (Pattern.matches("^[a-zA-Z]*$", nombreEmpleado)){
+            if (nombreEmpleado.length()<=10){
                 setNombreEmpleado(nombreEmpleado);
                 return;
             }
         }
-        throw new NombreEmpleadoException("");
+        throw new NombreEmpleadoException("Nombre incorrecto menos de 10 caracteres y solo letras");
     }
 
     public void estableceMesesTrabajo(String mesesT) throws MesesTrabajoException {
         int n;
         if (mesesT.matches("^\\d+$")){
             n= Integer.parseInt(mesesT);
-            if (n>=000 && n < 1000 ){
-                setNumeroEmpleado(n);
+            if (n >= 000 && n < 1000 ){
+                setMesesTrabajo(n);
                 return;
             }
         }
-        throw new MesesTrabajoException("");
+        throw new MesesTrabajoException("meses invalidos");
     }
 
     public void establecerSerDirectivo(String directivo) throws CargoException {
-        char[] caracter= directivo.toCharArray();
+       
+    	char[] caracter= directivo.toCharArray();
+     
         if (directivo.length()==1){
             if (caracter[0] == '+' ){
                 setDirectivo(true);
+                return;
             }else if(caracter[0]=='-'){
                 setDirectivo(false);
+                return;
             }
+            
+           
         }
-        throw new CargoException("");
+        throw new CargoException("No es un caracter aceptado solo + o - ");
     }
 
     public int getNumeroEmpleado() {
@@ -134,4 +142,13 @@ public class Empleado {
     private void setPrima(Prima prima) {
         this.prima = prima;
     }
+
+
+	@Override
+	public String toString() {
+		return "EmpleadoJesmelis [numeroEmpleado=" + numeroEmpleado + ", nombreEmpleado=" + nombreEmpleado
+				+ ", mesesTrabajo=" + mesesTrabajo + ", Directivo=" + Directivo + ", prima=" + prima + "]";
+	}
+    
+    
 }
