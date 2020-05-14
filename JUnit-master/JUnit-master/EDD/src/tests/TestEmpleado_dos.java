@@ -132,6 +132,24 @@ public class TestEmpleado_dos {
 	}
 	
 	
+	@Test(expected = CargoException.class)
+	public void CargoErroneo() throws CargoException {
+	empleado.establecerSerDirectivo("*");
+		
+	}
+	
+	@Test (expected = NombreEmpleadoException.class)
+	public void NombreErroneo() throws NombreEmpleadoException {
+		empleado.estableceNombreEmpleado("mas de diez digitos");
+	}
+	
+	@Test (expected = NumeroEmpleadoException.class)
+	public void NumerodeEpleadoErroneo() throws NumeroEmpleadoException {
+		empleado.establecerNumeroEmpleado("2");
+	}
+	
+	
+	
 	
 	
 
